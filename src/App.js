@@ -1,15 +1,7 @@
-import "./App.css";
-import Navbar from "./Navbar";
-import Hero from "./Hero";
-import MainContent from "./MainContent";
-function App() {
-  return (
-    <div className="App">
-      <Navbar />
-      <Hero />
-      <MainContent />
-    </div>
-  );
-}
+import React from "react";
+
+const App = () => {
+  return <div></div>;
+};
 
 export default App;
