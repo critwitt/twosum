@@ -1,0 +1,82 @@
+.main {
+  overflow: hidden;
+}
+.navbar {
+  position: sticky;
+  top: 0;
+  background-image: linear-gradient(
+    to top,
+    rgba(255, 0, 0, 0),
+    rgba(0, 0, 0, 255)
+  );
+  display: flex;
+  list-style: none;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  padding: 0 20%;
+  font-size: 2vh;
+}
+.navbar-left {
+  padding: 20px;
+  font-size: 2vw;
+  font-weight: bold;
+  color: white;
+}
+.navbar-right {
+  position: absolute;
+  padding: 20px;
+  right: 5%;
+  display: flex;
+  align-items: center;
+}
+.navbar-right > li {
+  padding: 1vw 1vw;
+}
+.navbar-right > button {
+  background-color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 0px 20px;
+  float: left;
+  height: 4vh;
+  font-size: 1vw;
+  font-weight: bold;
+  color: rgb(59, 59, 59);
+}
+.hero {
+}
+.hero-img {
+  width: 99vw;
+  position: absolute;
+  top: -30%;
+  z-index: -1;
+}
+.hero-text {
+  font-size: 8vw;
+  color: white;
+  text-align: center;
+  font-weight: light;
+  padding-top: 100px;
+  margin-bottom: 50px;
+}
+.signup-btn-container {
+  text-align: center;
+}
+.signup-btn {
+  background: rgb(254, 44, 116);
+  background: linear-gradient(
+    90deg,
+    rgba(254, 44, 116, 1) 0%,
+    rgba(254, 90, 60, 1) 100%
+  );
+  border: none;
+  font-size: 1vw;
+  border-radius: 100px;
+  padding: 15px 80px;
+  color: white;
+  font-weight: bold;
+}
+.hero-description {
+  text-align: center;
+  color: white;
+  padding-top: 3%;
+}
