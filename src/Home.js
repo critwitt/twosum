@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
+import Login from "./Login";
 import dating from "./images/dating-app.jpg";
 const Home = () => {
+  const [show, setShow] = useState(false);
+
   return (
     <div className="main">
       <div className="navbar">
@@ -9,7 +12,13 @@ const Home = () => {
           <li>TwoSum</li>
         </div>
         <div className="navbar-right">
-          <button>Log in</button>
+          <button
+            onClick={(e) => {
+              setShow(true);
+            }}
+          >
+            Log in
+          </button>
         </div>
       </div>
 
@@ -17,11 +26,19 @@ const Home = () => {
         <img src={dating} className="hero-img"></img>
         <h1 className="hero-text">Swipe Right</h1>
         <div className="signup-btn-container">
-          <button className="signup-btn">Create Account</button>
+          <button
+            className="signup-btn"
+            onClick={(e) => {
+              setShow(true);
+            }}
+          >
+            Create Account
+          </button>
         </div>
 
         <h2 className="hero-description">Find Your True Love Today</h2>
       </div>
+      <Login show={show} onClose={() => setShow(false)} />
     </div>
   );
 };

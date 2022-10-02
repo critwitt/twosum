@@ -62,11 +62,11 @@
   text-align: center;
 }
 .signup-btn {
-  background: rgb(254, 44, 116);
+  background: rgb(254, 13, 13);
   background: linear-gradient(
     90deg,
-    rgba(254, 44, 116, 1) 0%,
-    rgba(254, 90, 60, 1) 100%
+    rgba(254, 13, 13, 1) 0%,
+    rgba(254, 213, 60, 1) 100%
   );
   border: none;
   font-size: 1vw;
