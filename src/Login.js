@@ -16,6 +16,7 @@ const Login = (props) => {
       className={`modal ${props.show ? "show" : ""}`}
       onClick={props.onClose}
     >
+      {/* MAKE SURE TO HAVE THIS FORM BE USED TO CREATE A NEW USER IN BACKEND*/}
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="delete-btn-container">
           <button className="delete-btn" onClick={props.onClose}>
