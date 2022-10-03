@@ -1,5 +1,5 @@
 import React from "react";
-import Login from "./Login";
+import CreateAccount from "./CreateAccount";
 import Home from "./Home";
 import Profile from "./Profile";
 import Browse from "./Browse";
@@ -18,10 +18,10 @@ const App = () => {
           }
         />
         <Route
-          path="/login"
+          path="/create-account"
           element={
             <>
-              <Login />
+              <CreateAccount />
             </>
           }
         />
