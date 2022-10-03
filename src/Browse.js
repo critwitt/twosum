@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Browse.css";
 import logo from "./images/png/logo-no-background.png";
 import { useNavigate } from "react-router-dom";
-
+import ProfileCard from "./ProfileCard";
 const Browse = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState([]);
+  const [refresh, setRefresh] = useState(0);
+  useEffect(() => {
+    fetch("http://localhost:9292/users")
+      .then((r) => r.json())
+      .then((data) => {
+        setUser(data[Math.floor(Math.random() * (data.length - 1))]);
+      });
+  }, [refresh]);
+
+  function handleDislike() {
+    //add user as both disliked and visited
+    setRefresh((refresh) => refresh + 1);
+  }
+
+  function handleLike() {
+    //add user as liked and visited
+    setRefresh((refresh) => refresh + 1);
+  }
   return (
     <div className="browse">
       <div className="browse-matches">
@@ -35,7 +54,16 @@ const Browse = () => {
         <button>Filters</button>
         <img src={logo}></img>
         <div className="profile-card">
+          <ProfileCard user={user} />
           {/* FILL THIS UP DYNAMICALLY WITH ACTUAL PEOPLE AND THEIR INFO */}
+        </div>
+        <div className="browse-buttons">
+          <button className="dislike" onClick={() => handleDislike()}>
+            X
+          </button>
+          <button className="like" onClick={() => handleLike()}>
+            ✓
+          </button>
         </div>
       </div>
     </div>
