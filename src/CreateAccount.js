@@ -6,6 +6,7 @@ const CreateAccount = () => {
   const navigate = useNavigate();
   return (
     <div className="create-account">
+      {/* MAKE SURE TO HAVE THIS FORM BE USED TO CREATE A NEW USER IN BACKEND*/}
       <div className="create-account-navbar">
         <img src={logo} className="create-account-logo"></img>
       </div>
