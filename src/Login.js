@@ -20,7 +20,14 @@ const Login = (props) => {
       body: JSON.stringify(user),
     }).then((r) => r.json());
 
-    props.onSignupSubmit(user);
+    fetch("http://localhost:9292/current-user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    }).then((r) => r.json());
+
     navigate("/create-account");
   }
 
