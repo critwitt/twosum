@@ -3,10 +3,17 @@ import "./Browse.css";
 import logo from "./images/png/logo-no-background.png";
 import { useNavigate } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
-const Browse = ({ currentUser }) => {
+const Browse = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [refresh, setRefresh] = useState(0);
+  const [currentUser, setCurrentUser] = useState({});
+  useEffect(() => {
+    fetch("http://localhost:9292/last-user")
+      .then((r) => r.json())
+      .then((user) => setCurrentUser({ ...user }));
+  }, []);
+
   useEffect(() => {
     fetch("http://localhost:9292/users")
       .then((r) => r.json())

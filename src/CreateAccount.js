@@ -4,19 +4,11 @@ import logo from "./images/png/logo-color.png";
 import { useNavigate } from "react-router-dom";
 
 const CreateAccount = () => {
-  let currentUser = {};
+  const [currentUser, setCurrentUser] = useState({});
   useEffect(() => {
-    fetch("http://localhost:9292/current-user")
+    fetch("http://localhost:9292/last-user")
       .then((r) => r.json())
-      .then((user) => {
-        currentUser = user;
-      });
-    console.log(currentUser);
-    fetch(`http://localhost:9292/users-data/${currentUser.email}`)
-      .then((r) => r.json())
-      .then((id) => {
-        currentUser.id = id;
-      });
+      .then((user) => setCurrentUser({ ...user }));
   }, []);
 
   const navigate = useNavigate();

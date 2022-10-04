@@ -1,9 +1,16 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "./Profile.css";
 import logo from "./images/png/logo-no-background.png";
 import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    fetch(`http://localhost:9292/last-user`)
+    .then(res => res.json())
+    .then(data => setUserData(data))
+  })
   return (
     <div className="browse">
       <div className="browse-matches">
@@ -34,7 +41,17 @@ const Profile = () => {
         <button>Filters</button>
         <img src={logo}></img>
         <div className="profile-card">
-          {/* FILL THIS UP DYNAMICALLY WITH ACTUAL PEOPLE AND THEIR INFO */}
+          <img className="profile-profile-img" src={userData.profile_img} alt="No logo" />
+          <div className="profile-first-name">{userData.first_name}</div>
+          <div className="profile-gender">({userData.gender === "female" ? "she/her" : "he/him"})</div>
+          <div className="profile-age">{userData.age}</div>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <div className="profile-bio">{userData.bio}</div>
+          <div className="profile-desired_sex">Looking for: {userData.desired_sex}</div>
         </div>
       </div>
     </div>
