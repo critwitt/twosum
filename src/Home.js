@@ -4,6 +4,7 @@ import Login from "./Login";
 import dating from "./images/dating-app.jpg";
 const Home = () => {
   const [show, setShow] = useState(false);
+  const [userLogin, setUserLogin] = useState(false);
 
   return (
     <div className="main">
@@ -14,7 +15,7 @@ const Home = () => {
         <div className="navbar-right">
           <button
             onClick={(e) => {
-              setShow(true);
+              setUserLogin(true);
             }}
           >
             Log in
@@ -38,7 +39,7 @@ const Home = () => {
 
         <h2 className="hero-description">Find Your True Love Today</h2>
       </div>
-      <Login show={show} onClose={() => setShow(false)} />
+      <Login show={show} userLogin={userLogin} onClose={() => {setShow(false); setUserLogin(false)}} />
     </div>
   );
 };
