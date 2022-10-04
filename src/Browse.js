@@ -3,7 +3,7 @@ import "./Browse.css";
 import logo from "./images/png/logo-no-background.png";
 import { useNavigate } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
-const Browse = () => {
+const Browse = ({ currentUser }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [refresh, setRefresh] = useState(0);
@@ -17,6 +17,9 @@ const Browse = () => {
 
   function handleDislike() {
     //add user as both disliked and visited
+    fetch(`http://localhost:9292/users-rejections/${currentUser.id}/${user.id}`)
+      .then((r) => r.json())
+      .then(console.log());
     setRefresh((refresh) => refresh + 1);
   }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CreateAccount from "./CreateAccount";
 import Home from "./Home";
 import Profile from "./Profile";
@@ -6,6 +6,8 @@ import Browse from "./Browse";
 import Chat from "./Chat";
 import { Routes, Route } from "react-router-dom";
 const App = () => {
+  const [user, setUser] = useState({});
+
   return (
     <div className="app">
       <Routes>
@@ -13,7 +15,7 @@ const App = () => {
           path="/"
           element={
             <>
-              <Home />
+              <Home onSignupSubmit={setUser} />
             </>
           }
         />
@@ -21,7 +23,7 @@ const App = () => {
           path="/create-account"
           element={
             <>
-              <CreateAccount />
+              <CreateAccount currentUser={user} />
             </>
           }
         />
@@ -37,7 +39,7 @@ const App = () => {
           path="/browse"
           element={
             <>
-              <Browse />
+              <Browse currentUser={user} />
             </>
           }
         />

@@ -1,7 +1,6 @@
 import React from "react";
 import "./ProfileCard.css";
 const ProfileCard = (user) => {
-  console.log(user);
   if (!user.user) return null;
   return (
     <div className="profile-card-content">
