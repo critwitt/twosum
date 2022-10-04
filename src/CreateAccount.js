@@ -14,11 +14,11 @@ const CreateAccount = ({ currentUser }) => {
 
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
-  const [mm, setMm] = useState("");
-  const [dd, setDd] = useState("");
-  const [yyyy, setYyyy] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState(0);
   const [gender, setGender] = useState("");
   const [desiredSex, setDesiredSex] = useState("");
+  const [bio, setBio] = useState('')
   const [values, setValues] = useState({
     imagePreviewUrl: "",
     picFile: null,
@@ -53,9 +53,12 @@ const CreateAccount = ({ currentUser }) => {
   function handleSubmit(e) {
     e.preventDefault();
     currentUser["first_name"] = firstName;
-    currentUser["age"] = 14;
+    currentUser["last_name"] = lastName
+    currentUser["age"] = age;
+    currentUser["bio"] = bio;
     currentUser["gender"] = gender;
     currentUser["desired_sex"] = desiredSex;
+    currentUser["profile_img"] = values.imagePreviewUrl;
     fetch(`http://localhost:9292/users/${currentUser.id}`, {
       method: "PATCH",
       headers: {
@@ -65,7 +68,7 @@ const CreateAccount = ({ currentUser }) => {
     }).then((r) => r.json());
     navigate("/browse");
   }
-
+console.log(age)
   return (
     <div className="create-account">
       {/* MAKE SURE TO HAVE THIS FORM BE USED TO CREATE A NEW USER IN BACKEND*/}
@@ -84,43 +87,36 @@ const CreateAccount = ({ currentUser }) => {
               type="text"
               name="first-name"
               placeholder="First Name"
-              value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             ></input>
-            <p className="create-account-text-label">Birthday</p>
+            
+            <p className="create-account-text-label">Last Name</p>
+            <input
+              type="text"
+              name="last-name"
+              placeholder="Last Name"
+              onChange={(e) => setLastName(e.target.value)}
+            ></input>
+
+            <p className="create-account-text-label">Age</p>
             <div className="group-inputs">
               <input
-                type="text"
-                name="month"
-                placeholder="MM"
+                type="number"
+                name="age"
+                placeholder="Age"
                 className="group-input"
-                value={mm}
-                onChange={(e) => setMm(e.target.value)}
+                onChange={(e) => setAge(e.target.value)}
               ></input>
-              <input
-                type="text"
-                name="day"
-                placeholder="DD"
-                className="group-input"
-                value={dd}
-                onChange={(e) => setDd(e.target.value)}
-              ></input>
-              <input
-                type="text"
-                name="year"
-                placeholder="YYYY"
-                className="group-input"
-                value={yyyy}
-                onChange={(e) => setYyyy(e.target.value)}
-              ></input>
+
             </div>
+              
             <p className="create-account-text-label">Gender</p>
             <div className="group-inputs">
               <button
                 onClick={(e) => {
                   handleGenderClick(e);
                 }}
-                value="man"
+                value="male"
               >
                 Man
               </button>
@@ -128,7 +124,7 @@ const CreateAccount = ({ currentUser }) => {
                 onClick={(e) => {
                   handleGenderClick(e);
                 }}
-                value="woman"
+                value="female"
               >
                 Woman
               </button>
@@ -176,70 +172,33 @@ const CreateAccount = ({ currentUser }) => {
               value={currentUser.email}
               disabled
             ></input>
-            <p className="create-account-text-label">Profile Photo</p>
-            <div className="pictures" onClick={() => addPics()}>
-              <input
-                className="picture"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                ref={fileInput}
-              />
-              <img src={values.imagePreviewUrl} alt="..." />
-              <input
-                className="picture"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                ref={fileInput}
-              />
-              {/* <img
-              src={imagePreviewUrl}
-              alt='...'/> */}
-              <input
-                className="picture"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                ref={fileInput}
-              />
-              {/* <img
-              src={imagePreviewUrl}
-              alt='...'/> */}
-              <input
-                className="picture"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                ref={fileInput}
-              />
-              {/* <img
-              src={imagePreviewUrl}
-              alt='...'/> */}
-              <input
-                className="picture"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                ref={fileInput}
-              />
-              {/* <img
-              src={imagePreviewUrl}
-              alt='...'/> */}
-              <input
-                className="picture"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                ref={fileInput}
-              />
-              {/* <img
-              src={imagePreviewUrl}
-              alt='...'/> */}
-            </div>
-            <p className="pictures-description">
-              Add at least one photo to continue
+             <p className="create-account-text-label">Add Bio</p>
+            <input
+              type="text"
+              name="add-bio"
+              placeholder="A little bit about yourself"
+              onChange={(e) => setBio(e.target.value)}
+            ></input>
+             <p className="pictures-description">
+              Add a profile picture
             </p>
+
+            <p className="create-account-text-label">Profile Photo</p> 
+           
+            <div className="pictures" onClick={() => addPics()}>
+              
+              <img className='picture' src={values.imagePreviewUrl} alt="" />
+              <input
+                type="file"
+                accept="image/*"
+               
+                onChange={handleImageChange}
+                ref={fileInput}
+                style = {{display:'none'}}
+              />  
+                
+            </div>
+         
             <button className="submit-create-account-btn" type="submit">
               Submit
             </button>
