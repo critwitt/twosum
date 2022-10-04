@@ -17,14 +17,31 @@ const Browse = ({ currentUser }) => {
 
   function handleDislike() {
     //add user as both disliked and visited
-    fetch(`http://localhost:9292/users-rejections/${currentUser.id}/${user.id}`)
-      .then((r) => r.json())
-      .then(console.log());
+    fetch(`http://localhost:9292/users-rejections/${currentUser.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        rejected_person_id: user.id,
+      }),
+    }).then((r) => r.json());
+
     setRefresh((refresh) => refresh + 1);
   }
 
   function handleLike() {
     //add user as liked and visited
+    fetch(`http://localhost:9292/users-likes/${currentUser.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        liked_person_id: user.id,
+      }),
+    }).then((r) => r.json());
+
     setRefresh((refresh) => refresh + 1);
   }
   return (
