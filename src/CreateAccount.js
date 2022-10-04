@@ -1,27 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CreateAccount.css";
 import logo from "./images/png/logo-color.png";
 import { useNavigate } from "react-router-dom";
 
-const CreateAccount = () => {
+const CreateAccount = ({ currentUser }) => {
+  useEffect(() => {
+    fetch(`http://localhost:9292/users-data/${currentUser.email}`)
+      .then((r) => r.json())
+      .then((id) => {
+        currentUser.id = id;
+      });
+  }, []);
+
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [mm, setMm] = useState("");
   const [dd, setDd] = useState("");
   const [yyyy, setYyyy] = useState("");
   const [gender, setGender] = useState("");
-  const [interests, setInterests] = useState("");
-  const [email, setEmail] = useState("");
+  const [desiredSex, setDesiredSex] = useState("");
   const [values, setValues] = useState({
     imagePreviewUrl: "",
-    picFIle : null
-  })
+    picFile: null,
+  });
 
-  let fileInput = React.createRef()
+  let fileInput = React.createRef();
 
   function handleShowMeClick(e) {
     e.preventDefault();
-    setInterests(e.target.value);
+    setDesiredSex(e.target.value);
   }
 
   function handleGenderClick(e) {
@@ -29,37 +36,34 @@ const CreateAccount = () => {
     setGender(e.target.value);
   }
 
-  function addPics(){
+  function addPics() {
     fileInput.current.click();
   }
 
-function handleImageChange(e){
-  e.preventDefault();
-  let reader = new FileReader();
-  let infile = e.target.files[0];
-  reader.onloadend = () =>{
-    setValues({ ...values,
-      picFIle: infile,
-      imagePreviewUrl : reader.result
-
-    })
+  function handleImageChange(e) {
+    e.preventDefault();
+    let reader = new FileReader();
+    let infile = e.target.files[0];
+    reader.onloadend = () => {
+      setValues({ ...values, picFile: infile, imagePreviewUrl: reader.result });
+    };
+    reader.readAsDataURL(infile);
   }
-  reader.readAsDataURL(infile);
-}
 
-  function handleSubmit(newUser) {
-    const options = {
-      method: "POST",
+  function handleSubmit(e) {
+    e.preventDefault();
+    currentUser["first_name"] = firstName;
+    currentUser["age"] = 14;
+    currentUser["gender"] = gender;
+    currentUser["desired_sex"] = desiredSex;
+    fetch(`http://localhost:9292/users/${currentUser.id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newUser),
-    };
-    fetch("", options)
-      .then((r) => r.json())
-      .then((data) => console.log(data));
-
-    console.log(newUser);
+      body: JSON.stringify(currentUser),
+    }).then((r) => r.json());
+    navigate("/browse");
   }
 
   return (
@@ -73,17 +77,7 @@ function handleImageChange(e){
         <div className="create-account-forms">
           <form
             className="create-account-left-form"
-            onSubmit={() => {
-              const newUser = {
-                id: "",
-                firstName: firstName,
-                birthday: `${mm}/${dd}/${yyyy}`,
-                gender: gender,
-                showMe: interests,
-                email: email,
-              };
-              handleSubmit(newUser);
-            }}
+            onSubmit={(e) => handleSubmit(e)}
           >
             <p className="create-account-text-label">First Name</p>
             <input
@@ -122,25 +116,55 @@ function handleImageChange(e){
             </div>
             <p className="create-account-text-label">Gender</p>
             <div className="group-inputs">
-              <button onClick={(e) => { handleGenderClick(e)}} value="man">
+              <button
+                onClick={(e) => {
+                  handleGenderClick(e);
+                }}
+                value="man"
+              >
                 Man
               </button>
-              <button onClick={(e) => { handleGenderClick(e)}} value="woman">
+              <button
+                onClick={(e) => {
+                  handleGenderClick(e);
+                }}
+                value="woman"
+              >
                 Woman
               </button>
-              <button onClick={(e) => { handleGenderClick(e)}} value="other">
+              <button
+                onClick={(e) => {
+                  handleGenderClick(e);
+                }}
+                value="other"
+              >
                 Other
               </button>
             </div>
             <p className="create-account-text-label">Show Me</p>
             <div className="group-inputs">
-              <button onClick={(e) => { handleShowMeClick(e)}} value="men">
+              <button
+                onClick={(e) => {
+                  handleShowMeClick(e);
+                }}
+                value="men"
+              >
                 Men
               </button>
-              <button onClick={(e) => {handleShowMeClick(e)}} value="women">
+              <button
+                onClick={(e) => {
+                  handleShowMeClick(e);
+                }}
+                value="women"
+              >
                 Women
               </button>
-              <button onClick={(e) => { handleShowMeClick(e)}} value="everyone">
+              <button
+                onClick={(e) => {
+                  handleShowMeClick(e);
+                }}
+                value="everyone"
+              >
                 Everyone
               </button>
             </div>
@@ -148,82 +172,79 @@ function handleImageChange(e){
             <input
               type="text"
               name="email"
-              placeholder="theemailyousubmitted@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder={currentUser.email}
+              value={currentUser.email}
+              disabled
             ></input>
-          </form>
-          <form className=" create-account-right-form">
             <p className="create-account-text-label">Profile Photo</p>
-            <div className="pictures"  onClick={() => addPics()}>
+            <div className="pictures" onClick={() => addPics()}>
               <input
-              className="picture"
-              type="file"
-              accept="image/*"
-              onChange = {handleImageChange}
-              ref={fileInput}
+                className="picture"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                ref={fileInput}
               />
-              <img
-              src={values.imagePreviewUrl }
-              alt='...'/>
+              <img src={values.imagePreviewUrl} alt="..." />
               <input
-              className="picture"
-              type="file"
-              accept="image/*"
-              onChange = {handleImageChange}
-              ref={fileInput}/>
-               {/* <img
+                className="picture"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                ref={fileInput}
+              />
+              {/* <img
               src={imagePreviewUrl}
               alt='...'/> */}
               <input
-              className="picture"
-              type="file"
-              accept="image/*"
-              onChange = {handleImageChange}
-              ref={fileInput}/>
-               {/* <img
+                className="picture"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                ref={fileInput}
+              />
+              {/* <img
               src={imagePreviewUrl}
               alt='...'/> */}
               <input
-              className="picture"
-              type="file"
-              accept="image/*"
-              onChange = {handleImageChange}
-              ref={fileInput}/>
-               {/* <img
+                className="picture"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                ref={fileInput}
+              />
+              {/* <img
               src={imagePreviewUrl}
               alt='...'/> */}
               <input
-              className="picture"
-              type="file"
-              accept="image/*"
-              onChange = {handleImageChange}
-              ref={fileInput}/>
-               {/* <img
+                className="picture"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                ref={fileInput}
+              />
+              {/* <img
               src={imagePreviewUrl}
               alt='...'/> */}
               <input
-              className="picture"
-              type="file"
-              accept="image/*"
-              onChange = {handleImageChange}
-              ref={fileInput}/>
-               {/* <img
+                className="picture"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                ref={fileInput}
+              />
+              {/* <img
               src={imagePreviewUrl}
               alt='...'/> */}
-
             </div>
             <p className="pictures-description">
               Add at least one photo to continue
             </p>
+            <button className="submit-create-account-btn" type="submit">
+              Submit
+            </button>
           </form>
         </div>
-        <button
-          className="submit-create-account-btn"
-          onClick={() => navigate("/browse")}
-        >
-          Submit
-        </button>
       </div>
     </div>
   );
