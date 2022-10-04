@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Home.css";
 import Login from "./Login";
 import dating from "./images/dating-app.jpg";
-const Home = ({ onSignupSubmit }) => {
+const Home = () => {
   const [show, setShow] = useState(false);
 
   return (
@@ -38,11 +38,7 @@ const Home = ({ onSignupSubmit }) => {
 
         <h2 className="hero-description">Find Your True Love Today</h2>
       </div>
-      <Login
-        show={show}
-        onSignupSubmit={onSignupSubmit}
-        onClose={() => setShow(false)}
-      />
+      <Login show={show} onClose={() => setShow(false)} />
     </div>
   );
 };

@@ -15,7 +15,7 @@ const App = () => {
           path="/"
           element={
             <>
-              <Home onSignupSubmit={setUser} />
+              <Home />
             </>
           }
         />
@@ -23,7 +23,7 @@ const App = () => {
           path="/create-account"
           element={
             <>
-              <CreateAccount currentUser={user} />
+              <CreateAccount />
             </>
           }
         />

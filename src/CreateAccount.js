@@ -3,8 +3,15 @@ import "./CreateAccount.css";
 import logo from "./images/png/logo-color.png";
 import { useNavigate } from "react-router-dom";
 
-const CreateAccount = ({ currentUser }) => {
+const CreateAccount = () => {
+  let currentUser = {};
   useEffect(() => {
+    fetch("http://localhost:9292/current-user")
+      .then((r) => r.json())
+      .then((user) => {
+        currentUser = user;
+      });
+    console.log(currentUser);
     fetch(`http://localhost:9292/users-data/${currentUser.email}`)
       .then((r) => r.json())
       .then((id) => {
@@ -18,7 +25,7 @@ const CreateAccount = ({ currentUser }) => {
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState("");
   const [desiredSex, setDesiredSex] = useState("");
-  const [bio, setBio] = useState('')
+  const [bio, setBio] = useState("");
   const [values, setValues] = useState({
     imagePreviewUrl: "",
     picFile: null,
@@ -53,7 +60,7 @@ const CreateAccount = ({ currentUser }) => {
   function handleSubmit(e) {
     e.preventDefault();
     currentUser["first_name"] = firstName;
-    currentUser["last_name"] = lastName
+    currentUser["last_name"] = lastName;
     currentUser["age"] = age;
     currentUser["bio"] = bio;
     currentUser["gender"] = gender;
@@ -68,7 +75,7 @@ const CreateAccount = ({ currentUser }) => {
     }).then((r) => r.json());
     navigate("/browse");
   }
-console.log(age)
+
   return (
     <div className="create-account">
       {/* MAKE SURE TO HAVE THIS FORM BE USED TO CREATE A NEW USER IN BACKEND*/}
@@ -89,7 +96,7 @@ console.log(age)
               placeholder="First Name"
               onChange={(e) => setFirstName(e.target.value)}
             ></input>
-            
+
             <p className="create-account-text-label">Last Name</p>
             <input
               type="text"
@@ -107,9 +114,8 @@ console.log(age)
                 className="group-input"
                 onChange={(e) => setAge(e.target.value)}
               ></input>
-
             </div>
-              
+
             <p className="create-account-text-label">Gender</p>
             <div className="group-inputs">
               <button
@@ -172,33 +178,28 @@ console.log(age)
               value={currentUser.email}
               disabled
             ></input>
-             <p className="create-account-text-label">Add Bio</p>
+            <p className="create-account-text-label">Add Bio</p>
             <input
               type="text"
               name="add-bio"
               placeholder="A little bit about yourself"
               onChange={(e) => setBio(e.target.value)}
             ></input>
-             <p className="pictures-description">
-              Add a profile picture
-            </p>
+            <p className="pictures-description">Add a profile picture</p>
 
-            <p className="create-account-text-label">Profile Photo</p> 
-           
+            <p className="create-account-text-label">Profile Photo</p>
+
             <div className="pictures" onClick={() => addPics()}>
-              
-              <img className='picture' src={values.imagePreviewUrl} alt="" />
+              <img className="picture" src={values.imagePreviewUrl} alt="" />
               <input
                 type="file"
                 accept="image/*"
-               
                 onChange={handleImageChange}
                 ref={fileInput}
-                style = {{display:'none'}}
-              />  
-                
+                style={{ display: "none" }}
+              />
             </div>
-         
+
             <button className="submit-create-account-btn" type="submit">
               Submit
             </button>
