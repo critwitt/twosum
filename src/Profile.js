@@ -1,57 +1,131 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./Profile.css";
-import logo from "./images/png/logo-no-background.png";
 import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
 
+  const [values, setValues] = useState({
+    imagePreviewUrl: "",
+    picFile: null,
+  });
+  let fileInput = React.createRef();
   useEffect(() => {
     fetch(`http://localhost:9292/last-user`)
-    .then(res => res.json())
-    .then(data => setUserData(data))
-  })
+      .then((res) => res.json())
+      .then((data) => setUserData(data));
+  }, []);
+
+  function handleImageChange(e) {
+    e.preventDefault();
+    let reader = new FileReader();
+    let infile = e.target.files[0];
+    reader.onloadend = () => {
+      setValues({ ...values, picFile: infile, imagePreviewUrl: reader.result });
+    };
+    reader.readAsDataURL(infile);
+  }
+  function handleEditProfileSubmit(e) {
+    e.preventDefault();
+    console.log(values.imagePreviewUrl);
+    fetch(`http://localhost:9292/users-edit-profile/${userData.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        profile_img: values.imagePreviewUrl,
+        first_name: e.target["first_name"].value,
+        last_name: e.target["last_name"].value,
+        age: e.target["age"].value,
+        bio: e.target["bio"].value,
+        desired_sex: userData["desired_sex"],
+      }),
+    });
+  }
+
+  function handleDeleteAccount() {
+    fetch(`http://localhost:9292/users/${userData.id}`, {
+      method: "DELETE",
+      "Content-Type": "application/json",
+    }).then((r) => r.json());
+    navigate("/");
+  }
   return (
-    <div className="browse">
-      <div className="browse-matches">
+    <div className="edit-profile">
+      <div className="edit-profile-sidebar">
         <div className="profile" onClick={() => navigate("/browse")}>
           <div> &#60;</div>
-          <img src={logo} className="profile-img"></img>
+          <img
+            src={
+              values.imagePreviewUrl
+                ? values.imagePreviewUrl
+                : userData.profile_img
+            }
+            alt="No logo"
+            className="profile-img"
+          ></img>
           {/* FILL THIS UP DYNAMICALLY */}
+          <h1>{userData.first_name + " " + userData.last_name}</h1>
         </div>
-        <div className="conversations-dropdown">
-          {/* FILL THIS DROPDOWN ARROW DYNAMICALLY */}
-          <span className="dropdown-arrow">^</span> Conversations{" "}
-          <span className="recent">(Recent)</span>
-        </div>
-        <div className="conversations">
-          <div className="conversation">
-            <img src={logo}></img>
-            <div className="conversation-description">
-              {/* FILL THIS UP DYNAMICALLY */}
-              <h1>Susan Johnson</h1>
-              {/* FILL THIS UP DYNAMICALLY */}
-              <h2>hey, what are you up to?</h2>
-            </div>
+        <div className="edit-profile-sidebar-buttons">
+          <div className="edit-profile-btn active">Edit Profile</div>
+          <div className="log-out-btn" onClick={() => navigate("/")}>
+            Log Out
+          </div>
+          <div className="delete-account-btn" onClick={handleDeleteAccount}>
+            Delete Account
           </div>
         </div>
       </div>
-      <div className="browse-right">
-        {/* MAKE THIS DROP DOWN TO A POPUP MODAL THAT SHOWS FILTERS */}
-        <button>Filters</button>
-        <img src={logo}></img>
-        <div className="profile-card">
-          <img className="profile-profile-img" src={userData.profile_img} alt="No logo" />
-          <div className="profile-first-name">{userData.first_name}</div>
-          <div className="profile-gender">({userData.gender === "female" ? "she/her" : "he/him"})</div>
-          <div className="profile-age">{userData.age}</div>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <div className="profile-bio">{userData.bio}</div>
-          <div className="profile-desired_sex">Looking for: {userData.desired_sex}</div>
+      <div className="edit-profile-right">
+        <h1>EDIT PROFILE</h1>
+        <div
+          className="edit-profile-right-picture"
+          onClick={() => fileInput.current.click()}
+        >
+          <img
+            src={
+              values.imagePreviewUrl
+                ? values.imagePreviewUrl
+                : userData.profile_img
+            }
+            alt=""
+          />
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInput}
+            onChange={handleImageChange}
+            style={{ display: "none" }}
+          />
+        </div>
+        <div className="edit-profile-right-content">
+          <form onSubmit={handleEditProfileSubmit}>
+            <p>First: </p>
+            <input
+              type="text"
+              name="first_name"
+              defaultValue={userData.first_name}
+            ></input>
+            <p>Last: </p>
+            <input
+              type="text"
+              name="last_name"
+              defaultValue={userData.last_name}
+            ></input>
+            <p>Age: </p>
+            <input type="number" name="age" defaultValue={userData.age}></input>
+            <p>Bio: </p>
+            <input type="text" name="bio" defaultValue={userData.bio}></input>
+            <p>Into: </p>
+            <input
+              type="text"
+              name="looking-for"
+              defaultValue={userData.desired_sex}
+            ></input>
+            <button type="submit">Add Changes</button>
+          </form>
         </div>
       </div>
     </div>
