@@ -74,6 +74,7 @@
 .pictures {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .pictures > .picture {
   margin: 1%;
@@ -97,7 +98,7 @@
   border: none;
   border-radius: 20px;
   padding: 10px 20px;
-  margin-left: 45%;
+  margin-left: 40%;
   background: rgb(254, 13, 13);
   background: linear-gradient(
     90deg,

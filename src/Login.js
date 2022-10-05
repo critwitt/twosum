@@ -29,39 +29,9 @@ const Login = (props) => {
   if (!props.show) {
     return null;
   }
-  return (<>
-  <div className = {`modal ${props.userLogin ? "show" : ""}`}
-      onClick={props.onClose}
-    >
-    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="delete-btn-container">
-          <button className="delete-btn" onClick={props.onClose}>
-            X
-          </button>
-        </div>
-
-        <div className="modal-header">
-          <img src={logo} className="login-logo"></img>
-          <h4>Log Back In</h4>
-
-         </div>
-        <form className="modal-form" onSubmit={(e) => handleSubmit(e)}>
-          <input type="text" name="username" placeholder="Username"></input>
-          <input type="text" name="password" placeholder="Password"></input>
-          <input
-            type="text"
-            name="check-password"
-            placeholder="Check Password"
-          ></input>
-          <input type="text" name="email" placeholder="Email"></input>
-          <button type="submit">Sign Up</button>
-        </form>
-    
-      </div>
-
-  </div>
-
-    <div
+  return (
+  
+  <div
       className={`modal ${props.show ? "show" : ""}`}
       onClick={props.onClose}
     >
@@ -94,7 +64,8 @@ const Login = (props) => {
           <button type="submit">Sign Up</button>
         </form>
       </div>
-    </div></>
+    </div>
+    
   );
 };
 
