@@ -4,13 +4,16 @@ import logo from "./images/png/logo-black.png";
 import { useNavigate } from "react-router-dom";
 const Login = (props) => {
   const navigate = useNavigate();
+  
   function handleSubmit(e) {
     e.preventDefault();
+    
     const user = {
       username: e.target.username.value,
       password: e.target.password.value,
       email: e.target.email.value,
     };
+    
     //update all the username
     fetch("http://localhost:9292/users", {
       method: "POST",

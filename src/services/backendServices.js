@@ -1,4 +1,4 @@
-import { getAConversationURL } from "./urls";
+import { getAConversationURL, getConnectionsURL } from "./urls"; 
 
 async function getAConversation(body) {
     try {
@@ -18,4 +18,24 @@ async function getAConversation(body) {
     }
 }
 
-export {getAConversation}
+async function getConnections(number) {
+    try {
+        const response = await fetch(getConnectionsURL(number), {
+            method: "GET",
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.json()
+    } catch (e) {
+        return e
+    }
+}
+
+export {
+    getAConversation, 
+    getConnections
+}

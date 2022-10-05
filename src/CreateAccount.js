@@ -4,7 +4,9 @@ import logo from "./images/png/logo-color.png";
 import { useNavigate } from "react-router-dom";
 
 const CreateAccount = () => {
+  
   const [currentUser, setCurrentUser] = useState({});
+  
   useEffect(() => {
     fetch("http://localhost:9292/last-user")
       .then((r) => r.json())
@@ -12,12 +14,14 @@ const CreateAccount = () => {
   }, []);
 
   const navigate = useNavigate();
+  
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState("");
   const [desiredSex, setDesiredSex] = useState("");
   const [bio, setBio] = useState("");
+  
   const [values, setValues] = useState({
     imagePreviewUrl: "",
     picFile: null,

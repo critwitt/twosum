@@ -39,7 +39,7 @@ const App = () => {
           path="/browse"
           element={
             <>
-              <Browse currentUser={user} />
+              <Browse />
             </>
           }
         />
