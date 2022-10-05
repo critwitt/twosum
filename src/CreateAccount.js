@@ -179,7 +179,7 @@ const CreateAccount = () => {
             ></input>
             <p className="pictures-description">Add a profile picture</p>
 
-            <p className="create-account-text-label">Profile Photo</p>
+            <p className="create-account-text-label" style={{ textAlign : "center" }}>Click The Square To Add A Profile Photo</p>
 
             <div className="pictures" onClick={() => addPics()}>
               <img className="picture" src={values.imagePreviewUrl} alt="" />

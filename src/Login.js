@@ -30,7 +30,8 @@ const Login = (props) => {
     return null;
   }
   return (
-    <div
+  
+  <div
       className={`modal ${props.show ? "show" : ""}`}
       onClick={props.onClose}
     >
@@ -64,6 +65,7 @@ const Login = (props) => {
         </form>
       </div>
     </div>
+    
   );
 };
 

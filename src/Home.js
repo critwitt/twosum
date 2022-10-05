@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import "./Home.css";
 import Login from "./Login";
 import dating from "./images/dating-app.jpg";
+import LoginModal from "./LoginModal";
+
 const Home = () => {
   const [show, setShow] = useState(false);
+  const [userLogin, setUserLogin] = useState(false);
+
+console.log(userLogin)
 
   return (
     <div className="main">
@@ -14,7 +19,7 @@ const Home = () => {
         <div className="navbar-right">
           <button
             onClick={(e) => {
-              setShow(true);
+              setUserLogin(true);
             }}
           >
             Log in
@@ -38,7 +43,8 @@ const Home = () => {
 
         <h2 className="hero-description">Find Your True Love Today</h2>
       </div>
-      <Login show={show} onClose={() => setShow(false)} />
+      <Login show={show}  onClose={() => setShow(false)} />
+      <LoginModal userLogin={userLogin} onClose={() => setUserLogin(false)} />
     </div>
   );
 };
