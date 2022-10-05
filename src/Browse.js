@@ -8,6 +8,7 @@ const Browse = () => {
   const [user, setUser] = useState([]);
   const [refresh, setRefresh] = useState(0);
   const [currentUser, setCurrentUser] = useState({});
+  const [isShowingConversations, setIsShowingConversations] = useState(true);
   useEffect(() => {
     fetch("http://localhost:9292/last-user")
       .then((r) => r.json())
@@ -51,20 +52,27 @@ const Browse = () => {
 
     setRefresh((refresh) => refresh + 1);
   }
+  function handleConversationClick() {
+    setIsShowingConversations(!isShowingConversations);
+  }
   return (
     <div className="browse">
       <div className="browse-matches">
         <div className="profile" onClick={() => navigate("/profile")}>
-          <img src={logo} className="profile-img"></img>
+          <img src={currentUser.profile_img} className="profile-img"></img>
           {/* FILL THIS UP DYNAMICALLY */}
-          <h1>John Smith</h1>
+          <h1>{currentUser.first_name + " " + currentUser.last_name}</h1>
         </div>
-        <div className="conversations-dropdown">
-          {/* FILL THIS DROPDOWN ARROW DYNAMICALLY */}
-          <span className="dropdown-arrow">^</span> Conversations{" "}
+        <div
+          className="conversations-dropdown"
+          onClick={handleConversationClick}
+        >
+          <span className="dropdown-arrow">↑</span> Conversations{" "}
           <span className="recent">(Recent)</span>
         </div>
-        <div className="conversations">
+        <div
+          className={`conversations  ${isShowingConversations ? "" : "hidden"}`}
+        >
           <div className="conversation">
             <img src={logo}></img>
             <div className="conversation-description">
