@@ -8,7 +8,7 @@ const Home = () => {
   const [show, setShow] = useState(false);
   const [userLogin, setUserLogin] = useState(false);
 
-console.log(userLogin)
+
 
   return (
     <div className="main">
