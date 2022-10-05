@@ -2,8 +2,6 @@ import logo from "../images/png/logo-no-background.png"
 
 function Conversation({ data, raiseClick }) {
   const {first_name, last_name, profile_img} = data;
-  
-  console.log(data);
     return (
         <div onClick={raiseClick} className="conversation">
         <img alt="twosum logo" className="conversation-image" src={profile_img || logo} />

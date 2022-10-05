@@ -6,16 +6,21 @@ import logo from "./images/png/logo-no-background.png";
 import Conversation from "./components/Conversation";
 import ConnectionModal from "./components/ConnectionModal";
 import ChatModal from "./components/ChatModal";
-
+import Cookies from 'universal-cookie';
 
 
 const Browse = () => {
   const navigate = useNavigate();
+  const cookies = new Cookies();
   const [user, setUser] = useState([]);
   const [refresh, setRefresh] = useState(0);
   const [currentUser, setCurrentUser] = useState({});
   const [connections, setConnections] = useState([]);
   const [viewingChat, setViewingChat] = useState(false);
+
+  cookies.set('userID', currentUser.id, { path: '/' });
+  
+  console.log(cookies.get('userID')); // Pacman
   
   useEffect(() => {
     fetch("http://localhost:9292/last-user")
