@@ -3,12 +3,15 @@ import "./Browse.css";
 import logo from "./images/png/logo-no-background.png";
 import { useNavigate } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
+import MatchModal from "./MatchModal";
 const Browse = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [refresh, setRefresh] = useState(0);
   const [currentUser, setCurrentUser] = useState({});
   const [isShowingConversations, setIsShowingConversations] = useState(true);
+  const [justMatchedId, setJustMatchedId] = useState(0);
+  const [showMatch, setShowMatch] = useState(false);
   useEffect(() => {
     fetch("http://localhost:9292/last-user")
       .then((r) => r.json())
@@ -48,7 +51,17 @@ const Browse = () => {
       body: JSON.stringify({
         liked_person_id: user.id,
       }),
-    }).then((r) => r.json());
+    })
+      .then((r) => r.json())
+      //NOW THIS RESULT WILL TRIGGER SOMETHING. WHEN ACCEPTED, THE RESULT IS GOING TO BE THE STRING THAT IS RETURNED. NOW, WE CAN DO SOMETHING WITH THIS STRING!
+      .then((result) => {
+        let results = result.split(" ");
+        setJustMatchedId(parseInt(results[results.length - 1]));
+        if (results[results.length - 1]) {
+          setShowMatch(true);
+          return;
+        }
+      });
 
     setRefresh((refresh) => refresh + 1);
   }
@@ -57,6 +70,18 @@ const Browse = () => {
   }
   return (
     <div className="browse">
+      {justMatchedId == 0 ? (
+        ""
+      ) : (
+        <MatchModal
+          currentUserId={currentUser.id}
+          matchedUserId={justMatchedId}
+          show={showMatch}
+          onClose={() => {
+            setShowMatch(false);
+          }}
+        />
+      )}
       <div className="browse-matches">
         <div className="profile" onClick={() => navigate("/profile")}>
           <img src={currentUser.profile_img} className="profile-img"></img>

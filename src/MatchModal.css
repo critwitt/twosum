@@ -1,0 +1,30 @@
+.match-modal {
+  position: absolute;
+  z-index: 10;
+  margin-left: 22%;
+  margin-top: 7%;
+  background-color: rgb(255, 177, 177);
+  width: 70vw;
+  height: 72vh;
+  border: 1px solid;
+  text-align: center;
+}
+.hidden {
+  height: 0px;
+  border: none;
+}
+.match-modal > img {
+  height: 300px;
+  border-radius: 100%;
+  margin: 10px;
+}
+.button-container > button {
+  margin-top: 5%;
+  color: white;
+  font-weight: bold;
+  font-size: 1vw;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  background-color: rgb(253, 100, 100);
+}
