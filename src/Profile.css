@@ -1,0 +1,80 @@
+.edit-profile {
+  display: flex;
+  overflow: hidden;
+}
+.edit-profile-sidebar {
+  border-right: 1px solid;
+  position: sticky;
+  left: 0;
+  width: 350px;
+  height: 100vh;
+}
+.profile > button {
+  background-color: white;
+  border: none;
+  color: gray;
+}
+.profile > img {
+  height: 50px;
+}
+.edit-profile-sidebar-buttons {
+  padding: 10%;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: gray;
+  font-size: 1vw;
+  text-align: center;
+}
+.active {
+  color: black;
+}
+.edit-profile-sidebar-buttons > div {
+  margin: 0;
+  padding: 5%;
+  transform: 300ms all;
+}
+.edit-profile-sidebar-buttons > div:hover {
+  transform: scale(1.1);
+  background-color: rgba(240, 238, 238, 0.5);
+  cursor: pointer;
+  color: black;
+}
+
+.edit-profile-right {
+  width: 100%;
+}
+.edit-profile-right > div {
+  text-align: center;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 1vw;
+}
+.edit-profile-right > h1 {
+  text-align: center;
+}
+.edit-profile-right-picture {
+  border-radius: 50px;
+  border: 1px solid;
+  margin-left: 33% !important;
+  width: 30%;
+}
+.edit-profile-right-picture > img {
+  max-width: 100%;
+  aspect-ratio: 10/10;
+  border-radius: 50px;
+}
+.edit-profile-right-content > form {
+  margin-left: 40%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.edit-profile-right-content > form > input {
+  margin: 1% 67% 1% 3%;
+
+  padding-right: 0%;
+}
+.edit-profile-right-content > form > button {
+  margin-left: 5%;
+  transition: 100ms all;
+}
+.edit-profile-right-content > form > button:hover {
+  transform: scale(1.1);
+}

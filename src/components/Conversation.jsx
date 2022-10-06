@@ -1,15 +1,21 @@
 import logo from "../images/png/logo-no-background.png"
 
 function Conversation({ data, raiseClick }) {
-  const {first_name, last_name, profile_img} = data;
+  const match = data[0]
+  const messages = data[1]
+  const reciever = data[2]
+
+  function renderFinalMessage() {
+    return 'Start the conversation!'
+  }
     return (
-        <div onClick={raiseClick} className="conversation">
-        <img alt="twosum logo" className="conversation-image" src={profile_img || logo} />
+        <div onClick={() => raiseClick(messages, match.id, reciever)} className="conversation">
+        <img alt="twosum logo" className="conversation-image" src={reciever.profile_img || logo} />
         <div className="conversation-description">
           {/* FILL THIS UP DYNAMICALLY */}
-          <h1>{first_name} {last_name}</h1>
+          <h1>{reciever.first_name} {reciever.last_name}</h1>
           {/* FILL THIS UP DYNAMICALLY */}
-          <h2>hey, what are you up to?</h2>
+          <h2>{renderFinalMessage()}</h2>
         </div>
       </div>
     );

@@ -1,5 +1,6 @@
 .browse {
   display: flex;
+  flex-direction: row;
 }
 .browse-matches {
   border-right: 1px solid;
@@ -16,6 +17,7 @@
 .profile:hover {
   background-color: rgba(211, 211, 211, 0.171);
 }
+
 .profile > h1 {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -37,16 +39,26 @@
   overflow: scroll;
 }
 
+
+.conversations {
+  height: 100%;
+  transition: 200ms all;
+}
+.hidden {
+  height: 0;
+  overflow: hidden;
+}
+
 .conversations-dropdown {
   margin-top: 20px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
+.conversations-dropdown:hover {
+  cursor: pointer;
+}
 .conversations-dropdown > .dropdown-arrow {
   padding-left: 10px;
   font-weight: bolder;
-}
-.conversations-dropdown > .dropdown-arrow:hover {
-  cursor: pointer;
 }
 
 .conversations-dropdown > .recent {
@@ -151,4 +163,78 @@
   height: 50px;
   float: inline-end;
   padding-left: 36%;
+}
+
+/* 
+=============================================
+CHAT MODULE STYLING
+=============================================
+
+*/
+
+.chat-container {
+  width: 80%;
+  max-height: calc(100vh - 20px);
+  overflow: scroll;
+  position: relative;
+  /* background-color:blanchedalmond; */
+}
+
+.send-message-container {
+  background-color: white;
+  width: 100%;
+  padding: 10px;
+  position: sticky;
+  bottom: 0px
+}
+
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.sent-message {
+
+}
+.recieved-message {
+
+}
+
+.message {
+  background-color: rgb(246, 246, 246);
+  width: 75%;
+  margin: 2px;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+.message-container {
+  margin-bottom: 15px;
+  position: relative;
+  min-width: 100%;
+  /* border: solid blue; */
+}
+
+.block {
+  display: block;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.chat-header {
+  background-color: white;
+  border-bottom: solid;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
 }

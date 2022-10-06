@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import "./Home.css";
-import Login from "./Login";
+import Signup from "./SignUp";
 import dating from "./images/dating-app.jpg";
-const Home = () => {
-  const [show, setShow] = useState(false);
+import LoginModal from "./LoginModal";
+
+const Home = ({ setUserData }) => {
+  const [showSignUp, setShowSignup] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+
+
 
   return (
     <div className="main">
@@ -14,7 +19,7 @@ const Home = () => {
         <div className="navbar-right">
           <button
             onClick={(e) => {
-              setShow(true);
+              setShowLogin(true);
             }}
           >
             Log in
@@ -23,13 +28,13 @@ const Home = () => {
       </div>
 
       <div className="hero">
-        <img src={dating} className="hero-img"></img>
+        <img src={dating} alt='hero pic' className="hero-img"></img>
         <h1 className="hero-text">Swipe Right</h1>
         <div className="signup-btn-container">
           <button
             className="signup-btn"
             onClick={(e) => {
-              setShow(true);
+              setShowSignup(true);
             }}
           >
             Create Account
@@ -38,7 +43,16 @@ const Home = () => {
 
         <h2 className="hero-description">Find Your True Love Today</h2>
       </div>
-      <Login show={show} onClose={() => setShow(false)} />
+      <Signup 
+        show={showSignUp}  
+        onClose={() => setShowSignup(false)} 
+        setUserData={setUserData}
+      />
+
+      <LoginModal 
+        userLogin={showLogin} 
+        onClose={() => setShowLogin(false)} 
+      />
     </div>
   );
 };

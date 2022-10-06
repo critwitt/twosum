@@ -1,34 +1,64 @@
 import React, { useEffect, useState } from "react";
 import "./Browse.css";
 import { useNavigate } from "react-router-dom";
-import { getConnections } from "./services/backendServices";
+import { getConnections, getAUser } from "./services/backendServices";
 import logo from "./images/png/logo-no-background.png";
 import Conversation from "./components/Conversation";
 import ConnectionModal from "./components/ConnectionModal";
 import ChatModal from "./components/ChatModal";
 import Cookies from 'universal-cookie';
-
+import MatchModal from "./MatchModal";
 
 const Browse = () => {
   const navigate = useNavigate();
   const cookies = new Cookies();
-  const [user, setUser] = useState([]);
-  const [refresh, setRefresh] = useState(0);
+  const userId = cookies.get('userId')
+  
   const [currentUser, setCurrentUser] = useState({});
-  const [connections, setConnections] = useState([]);
-  const [viewingChat, setViewingChat] = useState(false);
+  const [user, setUser] = useState([]);
 
-  cookies.set('userID', currentUser.id, { path: '/' });
+  const [viewingChat, setViewingChat] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [matchInView, setMatchInView] = useState(0);
+  const [reciever, setReciever] = useState(0)
+  const [recieverName, setRecieverName] = useState('')
+
+  const [refresh, setRefresh] = useState(0);
+  const [matches, setMatches] = useState([]);
+  const [isShowingConversations, setIsShowingConversations] = useState(true);
+  const [justMatchedId, setJustMatchedId] = useState(0);
+  const [showMatch, setShowMatch] = useState(false);
   
-  console.log(cookies.get('userID')); // Pacman
-  
+
   useEffect(() => {
-    fetch("http://localhost:9292/last-user")
-    .then((r) => r.json())
-    .then((user) => setCurrentUser({ ...user }));
+    // ensures there is a user even signed in
+    if(!userId) { navigate('/') }
     
-    getConnections(10)
-    .then(setConnections)
+    // GET USER
+    fetch(`http://localhost:9292/users/${userId}`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(r => r.json())
+    .then(data => {
+      setCurrentUser(data);
+    })
+
+    // GET USER MATCHES
+    fetch(`http://localhost:9292/users/matches/${userId}`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(r => r.json())
+    .then(data => {
+      setMatches(data);
+    })
 
   }, []);
 
@@ -40,6 +70,15 @@ const Browse = () => {
       });
   }, [refresh]);
 
+  // used to get a specific user for matching
+  // useEffect(() => {
+  //   fetch("http://localhost:9292/users/73")
+  //     .then((r) => r.json())
+  //     .then((data) => {
+  //       setUser(data);
+  //     });
+  // }, [refresh]);
+  
   function handleDislike() {
     //add user as both disliked and visited
     fetch(`http://localhost:9292/users-rejections/${currentUser.id}`, {
@@ -65,39 +104,79 @@ const Browse = () => {
       body: JSON.stringify({
         liked_person_id: user.id,
       }),
-    }).then((r) => r.json());
+    })
+      .then((r) => r.json())
+      //NOW THIS RESULT WILL TRIGGER SOMETHING. WHEN ACCEPTED, THE RESULT IS GOING TO BE THE STRING THAT IS RETURNED. NOW, WE CAN DO SOMETHING WITH THIS STRING!
+      .then((result) => {
+        let results = result.split(" ");
+        setJustMatchedId(parseInt(results[results.length - 1]));
+        if (results[results.length - 1]) {
+          setShowMatch(true);
+          return;
+        }
+      });
 
     setRefresh((refresh) => refresh + 1);
   }
+
+  function handleConversationClick() {
+    setIsShowingConversations(!isShowingConversations);
+  }
+
+  function onViewChat(messages, matchId, reciever) {
+    console.log(reciever);
+
+    setViewingChat(true)
+    setMessages(messages)
+    setMatchInView(matchId)
+    setReciever(reciever.id)
+    setRecieverName(reciever.first_name)
+  }
+
+
   return (
     <div className="browse">
+      {/* matching modal */}
+        {
+          justMatchedId && <MatchModal
+            currentUserId={currentUser.id}
+            matchedUserId={justMatchedId}
+            show={showMatch}
+            onClose={() => {
+              setShowMatch(false);
+            }}
+          />
+        }
+      
       <div className="browse-matches">
-        
         <div className="profile" onClick={() => navigate("/profile")}>
           <img src={logo} alt="here is some alt text" className="profile-img"/>
-          {/* FILL THIS UP DYNAMICALLY */}
-          <h1>John Smith</h1>
+          <img src={currentUser.profile_img} alt="profile pic" className="profile-img"></img>
+          <h1>{currentUser.first_name + " " + currentUser.last_name}</h1>
         </div>
-        
-        <div className="conversations-dropdown">
-          {/* FILL THIS DROPDOWN ARROW DYNAMICALLY */}
-          <span className="dropdown-arrow">^</span> Conversations{" "}
-          <span className="recent">(Recent)</span>
-        </div>
-        
         <div className="conversations">
-          {
-            connections.map(data => <Conversation data={data} raiseClick={() => setViewingChat(true)} />)
-          }
-        </div>
-      
+          <div className="conversations-dropdown" onClick={handleConversationClick}>
+            <span className="dropdown-arrow">↑</span> Conversations{" "}
+            <span className="recent">(Recent)</span>
+          </div>
+          <div className={`conversations  ${isShowingConversations ? "" : "hidden"}`}>
+            {
+              matches.map(data => <Conversation data={data} raiseClick={onViewChat} />)
+            }
+          </div>
       </div>
       
+    </div>
       <div className="browse-right">
         {
           viewingChat ? 
           <ChatModal
             raiseClick={() => setViewingChat(false)}
+            matchId={matchInView}
+            senderId={parseInt(userId)}
+            recieverId={reciever}
+            senderName={currentUser.first_name}
+            recieverName={recieverName}
           />
           :
           <ConnectionModal
