@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-// import "./SignUp.css";
+import "./SignUp.css";
 import logo from "./images/png/logo-black.png";
 import { useNavigate } from "react-router-dom";
 
-const Signup = ({show, onClose, setUserData}) => {
+const Signup = ({show, onClose, setUserData, setShowSignup, setShowLogin }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -96,6 +96,9 @@ const Signup = ({show, onClose, setUserData}) => {
           
           <button type="submit">Sign Up</button>
         </form>
+        <div>
+        <h5 className="logintext">Already have account? Log back in <span className="logbackinspan" onClick={() => { setShowSignup(false); setShowLogin(true)}}>Here</span></h5>
+     </div>
       </div>
     </div>
     
