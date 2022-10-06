@@ -45,12 +45,16 @@ const Home = ({ setUserData }) => {
       </div>
       <Signup 
         show={showSignUp}  
+        setShowSignup={setShowSignup}
+        setShowLogin={setShowLogin}
         onClose={() => setShowSignup(false)} 
         setUserData={setUserData}
       />
 
       <LoginModal 
         userLogin={showLogin} 
+        setShowSignup={setShowSignup}
+        setShowLogin={setShowLogin}
         onClose={() => setShowLogin(false)} 
       />
     </div>

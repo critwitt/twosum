@@ -56,6 +56,9 @@ const LoginModal =  (props) =>{
           <button type="submit">Log In</button>
         </form>
       </div>
+      <div className="create-accountredirect">
+      <h5 className="createaccountbtn">Don't have an account? Click <span className="createaccspan" onClick={() =>{props.setShowSignup(true); props.setShowLogin(false)}}>Here</span> to create one</h5>
+      </div>
   </div>
     )
 }

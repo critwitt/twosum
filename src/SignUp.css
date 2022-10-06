@@ -1,0 +1,15 @@
+.logintext{
+    padding: 0% 15%;
+    font-style: italic;
+    margin: 10px;
+}
+
+.logbackinspan{
+    text-decoration: underline;
+  }
+  .logbackinspan:hover{
+    cursor: pointer;
+  }
+  .logbackinspan:active{
+    color: blue;
+  }
