@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Browse.css";
 import { useNavigate } from "react-router-dom";
 import { getConnections, getAUser } from "./services/backendServices";
-import logo from "./images/png/logo-no-background.png";
 import Conversation from "./components/Conversation";
 import ConnectionModal from "./components/ConnectionModal";
 import ChatModal from "./components/ChatModal";
@@ -21,21 +20,19 @@ const Browse = () => {
   const [messages, setMessages] = useState([]);
   const [matchInView, setMatchInView] = useState(0);
 
-  const [reciever, setReciever] = useState(0)
-  const [recieverName, setRecieverName] = useState('')
-  const [ageRange, setAgeRange] = useState(100)
-
+  const [reciever, setReciever] = useState(0);
+  const [recieverName, setRecieverName] = useState("");
+  const [ageRange, setAgeRange] = useState(100);
 
   const [refresh, setRefresh] = useState(0);
   const [matches, setMatches] = useState([]);
   const [isShowingConversations, setIsShowingConversations] = useState(true);
   const [justMatchedId, setJustMatchedId] = useState(null);
   const [showMatch, setShowMatch] = useState(false);
-  
-  if (!ageRange) {
-    setAgeRange(100)
-  }
 
+  if (!ageRange) {
+    setAgeRange(100);
+  }
 
   useEffect(() => {
     // ensures there is a user even signed in
@@ -57,6 +54,9 @@ const Browse = () => {
       });
 
     // GET USER MATCHES
+  }, []);
+
+  useEffect(() => {
     fetch(`http://localhost:9292/matches/user/${userId}`, {
       method: "GET",
       mode: "cors",
@@ -68,13 +68,13 @@ const Browse = () => {
       .then((data) => {
         setMatches(data);
       });
-  }, []);
-
-  useEffect(() => {
-    fetch(`http://localhost:9292/users/${currentUser.age}/${ageRange}/${currentUser.desired_sex}/${currentUser.gender}`)
+    fetch(
+      `http://localhost:9292/users/${currentUser.age}/${ageRange}/${currentUser.desired_sex}/${currentUser.gender}`
+    )
       .then((r) => r.json())
       .then((data) => {
-        setUser(data[Math.floor(Math.random() * (data.length))]);
+        const randomUser = data[Math.floor(Math.random() * data.length)];
+        setUser(randomUser);
       });
   }, [refresh, currentUser]);
 
@@ -87,10 +87,10 @@ const Browse = () => {
   //     });
   // }, [refresh]);
 
-  function handleAge (e) {
-    setAgeRange(e.target.value)
+  function handleAge(e) {
+    setAgeRange(e.target.value);
   }
-  
+
   function handleDislike() {
     //add user as both disliked and visited
     fetch(`http://localhost:9292/users-rejections/${currentUser.id}`, {
@@ -148,20 +148,22 @@ const Browse = () => {
   return (
     <div className="browse">
       {/* matching modal */}
-      {justMatchedId && (
+      {justMatchedId ? (
         <MatchModal
           currentUserId={currentUser.id}
           matchedUserId={justMatchedId}
           show={showMatch}
           onClose={() => {
             setShowMatch(false);
+            window.location.reload();
           }}
         />
+      ) : (
+        <></>
       )}
 
       <div className="browse-matches">
         <div className="profile" onClick={() => navigate("/profile")}>
-          <img src={logo} alt="here is some alt text" className="profile-img" />
           <img
             src={currentUser.profile_img}
             alt="profile pic"
@@ -201,11 +203,11 @@ const Browse = () => {
         ) : (
           <ConnectionModal
             user={user}
-            onDislike = {handleDislike}
-            onLike = {handleLike}
-            handleAge = {handleAge}
-          /> 
-        }
+            onDislike={handleDislike}
+            onLike={handleLike}
+            handleAge={handleAge}
+          />
+        )}
       </div>
     </div>
   );
