@@ -63,6 +63,10 @@ const Login = (props) => {
           <input type="text" name="email" placeholder="Email"></input>
           <button type="submit">Sign Up</button>
         </form>
+        <div className="login-holder">
+          <h5 className="logintext">Already have account? Log back in <span className="logbackinspan" onClick={() => {props.setShow(false); props.setUserLogin(true)}}>Here</span></h5>
+        
+        </div>
       </div>
     </div>
     

@@ -58,6 +58,10 @@ const LoginModal =  (props) =>{
           <input type="text" name="password" placeholder="Password" value={password}onChange={(e) => setPassword(e.target.value)}></input>
           <button type="submit">Log In</button>
         </form>
+        <div className="signupBtn">
+        <h5 className="createaccountbtn">Don't have an account? Make one <span className="createaccspan" onClick={() => {props.setShow(true); props.setUserLogin(false)}}>Here</span></h5>
+      
+        </div>
       </div>
   </div>
     )

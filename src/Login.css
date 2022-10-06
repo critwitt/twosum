@@ -61,7 +61,7 @@ form > input {
 }
 
 form > button {
-  margin: 20px;
+  margin: 10px;
   color: white;
   font-weight: bold;
   font-size: 1vw;
@@ -75,3 +75,35 @@ form > button {
     rgba(254, 213, 60, 1) 100%
   );
 }
+.logbackinbtn{
+  
+    margin: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 1vw;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    background: rgb(254, 13, 13);
+    background: linear-gradient(
+      90deg,
+      rgba(254, 13, 13, 1) 0%,
+      rgba(254, 213, 60, 1) 100%
+    );
+  
+}
+.logintext{
+  margin: 10px;
+  font-style: italic
+}
+
+.logbackinspan{
+  text-decoration: underline;
+}
+.logbackinspan:hover{
+  cursor: pointer;
+}
+.logbackinspan:active{
+  color: blue;
+}
+

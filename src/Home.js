@@ -43,8 +43,8 @@ const Home = () => {
 
         <h2 className="hero-description">Find Your True Love Today</h2>
       </div>
-      <Login show={show}  onClose={() => setShow(false)} />
-      <LoginModal userLogin={userLogin} onClose={() => setUserLogin(false)} />
+      <Login show={show}  setShow={setShow} setUserLogin={setUserLogin} onClose={() => setShow(false)} />
+      <LoginModal userLogin={userLogin} setShow={setShow} setUserLogin={setUserLogin} onClose={() => setUserLogin(false)} />
     </div>
   );
 };
