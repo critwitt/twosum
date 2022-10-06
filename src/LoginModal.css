@@ -75,3 +75,34 @@
       rgba(254, 213, 60, 1) 100%
     );
   }
+
+  .create-new-account{
+    margin: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 1vw;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    background: rgb(254, 13, 13);
+    background: linear-gradient(
+      90deg,
+      rgba(254, 13, 13, 1) 0%,
+      rgba(254, 213, 60, 1) 100%
+    );
+
+  }
+  .createaccspan{
+    text-decoration: underline;
+  }
+  .createaccspan:hover{
+    cursor: pointer;
+  }
+  .createaccspan:active{
+    color: blue;
+  }
+  .createaccountbtn{
+  padding: 0% 15%;
+  font-style: italic;
+  margin: 10px;
+  }

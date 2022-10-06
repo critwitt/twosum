@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./SignUp.css";
+// import "./SignUp.css";
 import logo from "./images/png/logo-black.png";
 import { useNavigate } from "react-router-dom";
 

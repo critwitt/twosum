@@ -26,7 +26,7 @@ const Browse = () => {
   const [refresh, setRefresh] = useState(0);
   const [matches, setMatches] = useState([]);
   const [isShowingConversations, setIsShowingConversations] = useState(true);
-  const [justMatchedId, setJustMatchedId] = useState(0);
+  const [justMatchedId, setJustMatchedId] = useState(null);
   const [showMatch, setShowMatch] = useState(false);
   
 
@@ -48,7 +48,7 @@ const Browse = () => {
     })
 
     // GET USER MATCHES
-    fetch(`http://localhost:9292/users/matches/${userId}`, {
+    fetch(`http://localhost:9292/matches/user/${userId}`, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -57,6 +57,7 @@ const Browse = () => {
     })
     .then(r => r.json())
     .then(data => {
+      console.log(data);
       setMatches(data);
     })
 

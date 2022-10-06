@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "./images/png/logo-black.png";
 import "./LoginModal.css"
@@ -33,13 +33,7 @@ const LoginModal =  (props) =>{
     
     
     }
-    
-    const closeOnEscapeKeyDown = (e) => {
-        if ((e.charCode || e.keyCode) === 27) props.onClose();
-      };
-      if (!props.userLogin) {
-        return null;
-      }
+  
       
     return(
         <div className = {`modal ${props.userLogin ? "show" : ""}`}
