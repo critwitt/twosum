@@ -1,23 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import "./CreateAccount.css";
 import logo from "./images/png/logo-color.png";
+import Cookies from 'universal-cookie';
 import { useNavigate } from "react-router-dom";
+import { createUser } from "./services/backendServices";
 
-const CreateAccount = () => {
-  const [currentUser, setCurrentUser] = useState({});
+const CreateAccount = ({ user }) => {
+
   useEffect(() => {
-    fetch("http://localhost:9292/last-user")
-      .then((r) => r.json())
-      .then((user) => setCurrentUser({ ...user }));
-  }, []);
+    if(!user.password || !user.email) {
+      navigate("/");
+    }
+  }, [])
 
   const navigate = useNavigate();
+  const cookies = new Cookies();
+  
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState("");
   const [desiredSex, setDesiredSex] = useState("");
   const [bio, setBio] = useState("");
+  const [username, setUsername] = useState(user.username)
+  const [password, setPassword] = useState(user.password)
+  const [email, setEmail] = useState(user.email)
+  
   const [values, setValues] = useState({
     imagePreviewUrl: "",
     picFile: null,
@@ -49,23 +57,36 @@ const CreateAccount = () => {
     reader.readAsDataURL(infile);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    currentUser["first_name"] = firstName;
-    currentUser["last_name"] = lastName;
-    currentUser["age"] = age;
-    currentUser["bio"] = bio;
-    currentUser["gender"] = gender;
-    currentUser["desired_sex"] = desiredSex;
-    currentUser["profile_img"] = values.imagePreviewUrl;
-    fetch(`http://localhost:9292/users/${currentUser.id}`, {
-      method: "PATCH",
+
+    const userData = {
+      first_name: firstName,
+      last_name: lastName,
+      gender,
+      email,
+      age,
+      bio,
+      profile_img: values.imagePreviewUrl,
+      desired_sex: desiredSex,
+      username,
+      password,
+    }
+
+    fetch('http://localhost:9292/users', {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(currentUser),
-    }).then((r) => r.json());
-    navigate("/browse");
+      body: JSON.stringify(userData)
+    })
+    .then(r => r.json())
+    .then(data => {
+      cookies.set('userId', data.id, {path: "/"})
+      navigate('/browse')
+    })
   }
 
   return (
@@ -75,7 +96,7 @@ const CreateAccount = () => {
         <img src={logo} alt="TwoSum" className="create-account-logo"></img>
       </div>
       <div className="create-account-content">
-        <h1 className="create-account-header">CREATE ACCOUNT</h1>
+        <h1 className="create-account-header">CREATE ACCOUNT FOR {username}</h1>
         <div className="create-account-forms">
           <form
             className="create-account-left-form"
@@ -166,9 +187,9 @@ const CreateAccount = () => {
             <input
               type="text"
               name="email"
-              placeholder={currentUser.email}
-              value={currentUser.email}
-              disabled
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              // disabled
             ></input>
             <p className="create-account-text-label">Add Bio</p>
             <input

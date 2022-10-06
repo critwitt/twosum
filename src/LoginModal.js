@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "./images/png/logo-black.png";
 import "./LoginModal.css"
@@ -26,17 +26,14 @@ const LoginModal =  (props) =>{
       })
       .then(r => r.json())
       .then(data => {
-      cookies.set('userId', data.id, {path: "/"})},
-      navigate("/browse") 
-      )
-    }
+        console.log(data);
+        cookies.set('userId', data.id, {path: "/"})
+        navigate('/browse')
+      })
     
-    const closeOnEscapeKeyDown = (e) => {
-        if ((e.charCode || e.keyCode) === 27) props.onClose();
-      };
-      if (!props.userLogin) {
-        return null;
-      }
+    
+    }
+  
       
     return(
         <div className = {`modal ${props.userLogin ? "show" : ""}`}
@@ -58,10 +55,6 @@ const LoginModal =  (props) =>{
           <input type="text" name="password" placeholder="Password" value={password}onChange={(e) => setPassword(e.target.value)}></input>
           <button type="submit">Log In</button>
         </form>
-        <div className="signupBtn">
-        <h5 className="createaccountbtn">Don't have an account? Make one <span className="createaccspan" onClick={() => {props.setShow(true); props.setUserLogin(false)}}>Here</span></h5>
-      
-        </div>
       </div>
   </div>
     )

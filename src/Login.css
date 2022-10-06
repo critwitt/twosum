@@ -9,6 +9,10 @@
   opacity: 0;
   transition: all 0.3s ease-in-out;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .modal.show {
   opacity: 1;
@@ -69,6 +73,7 @@ form > button {
   border-radius: 20px;
   padding: 10px 20px;
   background: rgb(254, 13, 13);
+  display: block;
   background: linear-gradient(
     90deg,
     rgba(254, 13, 13, 1) 0%,

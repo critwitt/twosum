@@ -15,7 +15,9 @@ const App = () => {
           path="/"
           element={
             <>
-              <Home />
+              <Home 
+                setUserData={data => setUser(data)}
+              />
             </>
           }
         />
@@ -23,7 +25,9 @@ const App = () => {
           path="/create-account"
           element={
             <>
-              <CreateAccount />
+              <CreateAccount 
+                user={user}
+              />
             </>
           }
         />
@@ -39,7 +43,7 @@ const App = () => {
           path="/browse"
           element={
             <>
-              <Browse currentUser={user} />
+              <Browse />
             </>
           }
         />
