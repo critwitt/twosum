@@ -238,3 +238,7 @@ CHAT MODULE STYLING
   flex-direction: row;
   margin-bottom: 10px;
 }
+
+.ageRange {
+  width: 25px;
+}

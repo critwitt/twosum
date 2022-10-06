@@ -20,14 +20,22 @@ const Browse = () => {
   const [viewingChat, setViewingChat] = useState(false);
   const [messages, setMessages] = useState([]);
   const [matchInView, setMatchInView] = useState(0);
-  const [reciever, setReciever] = useState(0);
-  const [recieverName, setRecieverName] = useState("");
+
+  const [reciever, setReciever] = useState(0)
+  const [recieverName, setRecieverName] = useState('')
+  const [ageRange, setAgeRange] = useState(100)
+
 
   const [refresh, setRefresh] = useState(0);
   const [matches, setMatches] = useState([]);
   const [isShowingConversations, setIsShowingConversations] = useState(true);
   const [justMatchedId, setJustMatchedId] = useState(null);
   const [showMatch, setShowMatch] = useState(false);
+  
+  if (!ageRange) {
+    setAgeRange(100)
+  }
+
 
   useEffect(() => {
     // ensures there is a user even signed in
@@ -63,12 +71,12 @@ const Browse = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:9292/users")
+    fetch(`http://localhost:9292/users/${currentUser.age}/${ageRange}/${currentUser.desired_sex}/${currentUser.gender}`)
       .then((r) => r.json())
       .then((data) => {
-        setUser(data[Math.floor(Math.random() * (data.length - 1))]);
+        setUser(data[Math.floor(Math.random() * (data.length))]);
       });
-  }, [refresh]);
+  }, [refresh, currentUser]);
 
   // used to get a specific user for matching
   // useEffect(() => {
@@ -79,6 +87,10 @@ const Browse = () => {
   //     });
   // }, [refresh]);
 
+  function handleAge (e) {
+    setAgeRange(e.target.value)
+  }
+  
   function handleDislike() {
     //add user as both disliked and visited
     fetch(`http://localhost:9292/users-rejections/${currentUser.id}`, {
@@ -189,10 +201,11 @@ const Browse = () => {
         ) : (
           <ConnectionModal
             user={user}
-            onDislike={handleDislike}
-            onLike={handleLike}
-          />
-        )}
+            onDislike = {handleDislike}
+            onLike = {handleLike}
+            handleAge = {handleAge}
+          /> 
+        }
       </div>
     </div>
   );
