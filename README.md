@@ -82,10 +82,10 @@ npm i -g npm
 ```
 
 You'll also need to run the backend server at the same time. 
-**clone** the back-end project repository from github: [https://github.com/roylee0912/twosum-backend](https://github.com/roylee0912/twosum-backend)
+**clone** the back-end project repository from github: [https://github.com/roylee0912/two-sum-backend](https://github.com/roylee0912/two-sum-backend)
 
 ```console
-$ git clone https://github.com/roylee0912/twosum-backend
+$ git clone https://github.com/roylee0912/two-sum-backend
 ```
 ### Install the Latest Ruby Version
 
