@@ -6,7 +6,7 @@
 }
 
 .create-account-logo {
-  height: 12vh;
+  height: 13vh;
   margin: 0;
 }
 .create-account-content {
@@ -20,34 +20,46 @@
 }
 
 .create-account-text-label {
-  margin: 0% 10%;
+  margin: 0% 14%;
   font-size: 15px;
   font-weight: bold;
   color: rgb(49, 49, 49);
+}
+.bio-input {
+  height: 100px;
 }
 .create-account-forms {
   display: flex;
   justify-content: space-between;
 }
-
-.create-account-left-form > input {
-  margin-top: 1%;
+.create-account-left-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.left-content > input {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 18px;
+  margin: 1% 0 0 14%;
+  background-color: rgba(221, 221, 221, 0.473);
+  padding: 2%;
+  border-radius: 8px;
   width: 450px;
   border: 2px solid rgb(180, 180, 180);
 }
 
 .group-inputs {
-  padding-left: 10%;
+  padding-left: 14%;
 }
 .group-inputs > .group-input {
-  margin: 1% 1% 3% 0;
-  border: 2px solid rgb(180, 180, 180);
-  border-radius: 5px;
-  text-align: center;
-  width: 50px;
-  padding: 10px;
-  font-size: 1vw;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 18px;
+  margin: 1% 0 0 0%;
   background-color: rgba(221, 221, 221, 0.473);
+  padding: 2%;
+  border-radius: 8px;
+  width: 50px;
+  border: 2px solid rgb(180, 180, 180);
 }
 .group-inputs > button {
   background-color: white;
@@ -64,22 +76,14 @@
   color: black;
 }
 
-.create-account-right-form {
-  width: 500px;
-}
-.create-account-right-form > p {
-  margin-left: 1%;
-  margin-bottom: 3%;
-}
 .pictures {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  padding-left: 14%;
+  text-align: center;
 }
 .pictures > .picture {
-  margin: 1%;
-  height: 200px;
-  width: 150px;
+  margin: 3% 25%;
+  height: 300px;
+  width: 300px;
   border-radius: 10px;
   border: 3px dashed rgb(153, 153, 153);
   background-color: rgba(219, 219, 219, 0.459);
@@ -88,6 +92,9 @@
 .pictures-description {
   color: rgb(87, 86, 86);
   font-weight: bold;
+
+  margin-left: 25%;
+  width: 100%;
   text-align: center;
 }
 .submit-create-account-btn {

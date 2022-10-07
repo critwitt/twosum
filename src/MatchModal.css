@@ -2,11 +2,12 @@
   position: absolute;
   z-index: 10;
   margin-left: 22%;
-  margin-top: 7%;
+  margin-top: 8%;
   background-color: rgb(255, 177, 177);
   width: 70vw;
   height: 72vh;
-  border: 1px solid;
+  border: none;
+  border-radius: 30px;
   text-align: center;
 }
 .hidden {

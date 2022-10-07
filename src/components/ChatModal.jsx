@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "./ChatModal.css";
 function ChatModal({
   raiseClick,
   matchId,
@@ -12,8 +12,6 @@ function ChatModal({
   const createMessageURL = "http://localhost:9292/messages/new";
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-
-  console.log(senderName);
 
   useEffect(() => {
     // get messages
@@ -52,14 +50,14 @@ function ChatModal({
     return messages.map((message) => {
       return (
         <div className="message-container">
-          <div className="message">
-            <div className={renderMessageClass(message.message_sender)}>
-              <div>
-                <span className="block bold">
-                  {renderSenderName(message.message_sender)}
-                </span>
-                <span>{message.message}</span>
-              </div>
+          <div
+            className={`message ${renderMessageClass(message.message_sender)}`}
+          >
+            <div>
+              <span className="block bold">
+                {renderSenderName(message.message_sender)}
+              </span>
+              <span>{message.message}</span>
             </div>
           </div>
         </div>
@@ -86,7 +84,6 @@ function ChatModal({
     })
       .then((r) => r.json())
       .then((data) => {
-        console.log(data);
         setMessages((messages) => [...messages, data]);
       });
   }
@@ -94,10 +91,16 @@ function ChatModal({
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <button className="mr-10" onClick={raiseClick}>
-          back
+        <button
+          className="mr-10"
+          onClick={() => {
+            raiseClick();
+            window.location.reload();
+          }}
+        >
+          ←
         </button>
-        <p>Chat with {recieverName}</p>
+        <p>{recieverName}</p>
       </div>
       {renderMessages()}
       <div className="send-message-container">

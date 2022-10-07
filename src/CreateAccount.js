@@ -3,7 +3,6 @@ import "./CreateAccount.css";
 import logo from "./images/png/logo-color.png";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
-import { createUser } from "./services/backendServices";
 
 const CreateAccount = ({ user }) => {
   useEffect(() => {
@@ -90,123 +89,126 @@ const CreateAccount = ({ user }) => {
 
   return (
     <div className="create-account">
-      {/* MAKE SURE TO HAVE THIS FORM BE USED TO CREATE A NEW USER IN BACKEND*/}
       <div className="create-account-navbar">
         <img src={logo} alt="TwoSum" className="create-account-logo"></img>
       </div>
       <div className="create-account-content">
-        <h1 className="create-account-header">CREATE ACCOUNT FOR {username}</h1>
+        <h1 className="create-account-header">CREATE ACCOUNT</h1>
         <div className="create-account-forms">
           <form
             className="create-account-left-form"
             onSubmit={(e) => handleSubmit(e)}
           >
-            <p className="create-account-text-label">First Name</p>
-            <input
-              type="text"
-              name="first-name"
-              placeholder="First Name"
-              onChange={(e) => setFirstName(e.target.value)}
-            ></input>
-
-            <p className="create-account-text-label">Last Name</p>
-            <input
-              type="text"
-              name="last-name"
-              placeholder="Last Name"
-              onChange={(e) => setLastName(e.target.value)}
-            ></input>
-
-            <p className="create-account-text-label">Age</p>
-            <div className="group-inputs">
+            <div className="left-content">
+              <p className="create-account-text-label">First Name</p>
               <input
-                type="number"
-                name="age"
-                placeholder="Age"
-                className="group-input"
-                onChange={(e) => setAge(e.target.value)}
+                type="text"
+                name="first-name"
+                placeholder="First Name"
+                onChange={(e) => setFirstName(e.target.value)}
+              ></input>
+
+              <p className="create-account-text-label">Last Name</p>
+              <input
+                type="text"
+                name="last-name"
+                placeholder="Last Name"
+                onChange={(e) => setLastName(e.target.value)}
+              ></input>
+
+              <p className="create-account-text-label">Age</p>
+              <div className="group-inputs">
+                <input
+                  type="number"
+                  name="age"
+                  placeholder="Age"
+                  className="group-input"
+                  onChange={(e) => setAge(e.target.value)}
+                ></input>
+              </div>
+
+              <p className="create-account-text-label">Gender</p>
+              <div className="group-inputs">
+                <button
+                  onClick={(e) => {
+                    handleGenderClick(e);
+                  }}
+                  value="male"
+                >
+                  Man
+                </button>
+                <button
+                  onClick={(e) => {
+                    handleGenderClick(e);
+                  }}
+                  value="female"
+                >
+                  Woman
+                </button>
+                <button
+                  onClick={(e) => {
+                    handleGenderClick(e);
+                  }}
+                  value="other"
+                >
+                  Other
+                </button>
+              </div>
+              <p className="create-account-text-label">Show Me</p>
+              <div className="group-inputs">
+                <button
+                  onClick={(e) => {
+                    handleShowMeClick(e);
+                  }}
+                  value="male"
+                >
+                  Men
+                </button>
+                <button
+                  onClick={(e) => {
+                    handleShowMeClick(e);
+                  }}
+                  value="female"
+                >
+                  Women
+                </button>
+                <button
+                  onClick={(e) => {
+                    handleShowMeClick(e);
+                  }}
+                  value="all"
+                >
+                  Everyone
+                </button>
+              </div>
+              <p className="create-account-text-label">Email Address</p>
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled
+              ></input>
+              <p className="create-account-text-label">Add Bio</p>
+              <input
+                type="textarea"
+                name="add-bio"
+                className="bio-input"
+                placeholder="A little bit about yourself"
+                onChange={(e) => setBio(e.target.value)}
               ></input>
             </div>
 
-            <p className="create-account-text-label">Gender</p>
-            <div className="group-inputs">
-              <button
-                onClick={(e) => {
-                  handleGenderClick(e);
-                }}
-                value="male"
-              >
-                Man
-              </button>
-              <button
-                onClick={(e) => {
-                  handleGenderClick(e);
-                }}
-                value="female"
-              >
-                Woman
-              </button>
-              <button
-                onClick={(e) => {
-                  handleGenderClick(e);
-                }}
-                value="other"
-              >
-                Other
-              </button>
-            </div>
-            <p className="create-account-text-label">Show Me</p>
-            <div className="group-inputs">
-              <button
-                onClick={(e) => {
-                  handleShowMeClick(e);
-                }}
-                value="male"
-              >
-                Men
-              </button>
-              <button
-                onClick={(e) => {
-                  handleShowMeClick(e);
-                }}
-                value="female"
-              >
-                Women
-              </button>
-              <button
-                onClick={(e) => {
-                  handleShowMeClick(e);
-                }}
-                value="all"
-              >
-                Everyone
-              </button>
-            </div>
-            <p className="create-account-text-label">Email Address</p>
-            <input
-              type="text"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              // disabled
-            ></input>
-            <p className="create-account-text-label">Add Bio</p>
-            <input
-              type="text"
-              name="add-bio"
-              placeholder="A little bit about yourself"
-              onChange={(e) => setBio(e.target.value)}
-            ></input>
-            <p className="pictures-description">Add a profile picture</p>
-
-            <p
-              className="create-account-text-label"
-              style={{ textAlign: "center" }}
-            >
-              Click The Square To Add A Profile Photo
-            </p>
-
             <div className="pictures" onClick={() => addPics()}>
+              <p className="pictures-description">Add a profile picture</p>
+
+              <p
+                className="create-account-text-label pictures-description"
+                style={{ textAlign: "center" }}
+              >
+                Click The Square To Add A Profile Photo
+              </p>
+
               <img className="picture" src={values.imagePreviewUrl} alt="" />
               <input
                 type="file"

@@ -15,9 +15,7 @@ const App = () => {
           path="/"
           element={
             <>
-              <Home 
-                setUserData={data => setUser(data)}
-              />
+              <Home setUserData={(data) => setUser(data)} />
             </>
           }
         />
@@ -25,9 +23,7 @@ const App = () => {
           path="/create-account"
           element={
             <>
-              <CreateAccount 
-                user={user}
-              />
+              <CreateAccount user={user} />
             </>
           }
         />
