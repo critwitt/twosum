@@ -3,13 +3,19 @@ import "./SignUp.css";
 import logo from "./images/png/logo-black.png";
 import { useNavigate } from "react-router-dom";
 
-const Signup = ({show, onClose, setUserData, setShowSignup, setShowLogin }) => {
+const Signup = ({
+  show,
+  onClose,
+  setUserData,
+  setShowSignup,
+  setShowLogin,
+}) => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [checkPassword, setCheckPassword] = useState('')
-  const [email, setEmail] = useState('')
-  
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
+  const [email, setEmail] = useState("");
+
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -17,11 +23,10 @@ const Signup = ({show, onClose, setUserData, setShowSignup, setShowLogin }) => {
     // check if username is unique
     // check to ensure both passwords matcxh
 
-    const user = { username, password, email};
+    const user = { username, password, email };
     await setUserData(user);
     navigate("/create-account");
 
-    
     //update all the username
 
     // fetch("http://localhost:9292/users", {
@@ -31,8 +36,6 @@ const Signup = ({show, onClose, setUserData, setShowSignup, setShowLogin }) => {
     //   },
     //   body: JSON.stringify(user),
     // }).then((r) => r.json());
-
-
   }
 
   const closeOnEscapeKeyDown = (e) => {
@@ -42,11 +45,7 @@ const Signup = ({show, onClose, setUserData, setShowSignup, setShowLogin }) => {
     return null;
   }
   return (
-  
-  <div
-      className={`modal ${show ? "show" : ""}`}
-      onClick={onClose}
-    >
+    <div className={`modal ${show ? "show" : ""}`} onClick={onClose}>
       {/* MAKE SURE TO HAVE THIS FORM BE USED TO CREATE A NEW USER IN BACKEND*/}
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="delete-btn-container">
@@ -65,43 +64,53 @@ const Signup = ({show, onClose, setUserData, setShowSignup, setShowLogin }) => {
           </h5>
         </div>
         <form className="modal-form" onSubmit={(e) => handleSubmit(e)}>
-          <input 
-            type="text" 
-            name="username" 
+          <input
+            type="text"
+            name="username"
             placeholder="Username"
-            onChange={e => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             value={username}
           ></input>
-          <input 
-            type="text" 
-            name="password" 
+          <input
+            type="password"
+            name="password"
             placeholder="Password"
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             value={password}
           ></input>
-          <input 
-            type="text" 
-            name="check-password" 
+          <input
+            type="password"
+            name="check-password"
             placeholder="Check Password"
-            onChange={e => setCheckPassword(e.target.value)}
+            onChange={(e) => setCheckPassword(e.target.value)}
             value={checkPassword}
           ></input>
-          <input 
-            type="text" 
-            name="email" 
+          <input
+            type="email"
+            name="email"
             placeholder="Email"
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             value={email}
           ></input>
-          
+
           <button type="submit">Sign Up</button>
         </form>
         <div>
-        <h5 className="logintext">Already have account? Log back in <span className="logbackinspan" onClick={() => { setShowSignup(false); setShowLogin(true)}}>Here</span></h5>
-     </div>
+          <h5 className="logintext">
+            Already have account? Log back in{" "}
+            <span
+              className="logbackinspan"
+              onClick={() => {
+                setShowSignup(false);
+                setShowLogin(true);
+              }}
+            >
+              Here
+            </span>
+          </h5>
+        </div>
       </div>
     </div>
-    
   );
 };
 

@@ -22,7 +22,7 @@ const Browse = () => {
 
   const [reciever, setReciever] = useState(0);
   const [recieverName, setRecieverName] = useState("");
-  const [ageRange, setAgeRange] = useState(100);
+  const [ageRange, setAgeRange] = useState(50);
 
   const [refresh, setRefresh] = useState(0);
   const [matches, setMatches] = useState([]);
@@ -31,7 +31,7 @@ const Browse = () => {
   const [showMatch, setShowMatch] = useState(false);
 
   if (!ageRange) {
-    setAgeRange(100);
+    setAgeRange(50);
   }
 
   useEffect(() => {
@@ -136,8 +136,6 @@ const Browse = () => {
   }
 
   function onViewChat(messages, matchId, reciever) {
-    console.log(reciever);
-
     setViewingChat(true);
     setMessages(messages);
     setMatchInView(matchId);
@@ -155,7 +153,6 @@ const Browse = () => {
           show={showMatch}
           onClose={() => {
             setShowMatch(false);
-            window.location.reload();
           }}
         />
       ) : (
@@ -176,8 +173,10 @@ const Browse = () => {
             className="conversations-dropdown"
             onClick={handleConversationClick}
           >
-            <span className="dropdown-arrow">↑</span> Conversations{" "}
-            <span className="recent">(Recent)</span>
+            <span className="dropdown-arrow">
+              {isShowingConversations ? "↑" : "↓"}
+            </span>{" "}
+            Conversations <span className="recent">(Recent)</span>
           </div>
           <div
             className={`conversations  ${
@@ -206,6 +205,7 @@ const Browse = () => {
             onDislike={handleDislike}
             onLike={handleLike}
             handleAge={handleAge}
+            ageRange={ageRange}
           />
         )}
       </div>

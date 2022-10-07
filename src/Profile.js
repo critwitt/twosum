@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
-
+  const [desiredSex, setDesiredSex] = useState("");
   const [values, setValues] = useState({
     imagePreviewUrl: "",
     picFile: null,
@@ -34,16 +34,20 @@ const Profile = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        profile_img: values.imagePreviewUrl,
+        profile_img: values.imagePreviewUrl
+          ? values.imagePreviewUrl
+          : userData.profile_img,
         first_name: e.target["first_name"].value,
         last_name: e.target["last_name"].value,
         age: e.target["age"].value,
         bio: e.target["bio"].value,
-        desired_sex: userData["desired_sex"],
+        desired_sex: desiredSex,
       }),
     });
   }
-
+  function handleDesiredSexBtnClick(e) {
+    setDesiredSex(e.target.value);
+  }
   function handleDeleteAccount() {
     fetch(`http://localhost:9292/users/${userData.id}`, {
       method: "DELETE",
@@ -119,6 +123,29 @@ const Profile = () => {
             <p>Bio: </p>
             <input type="text" name="bio" defaultValue={userData.bio}></input>
             <p>Into: </p>
+            <div className="desired-sexes">
+              <button
+                className="desired-sex"
+                value="male"
+                onClick={handleDesiredSexBtnClick}
+              >
+                MEN
+              </button>
+              <button
+                className="desired-sex"
+                value="female"
+                onClick={handleDesiredSexBtnClick}
+              >
+                WOMEN
+              </button>
+              <button
+                className="desired-sex"
+                value="all"
+                onClick={handleDesiredSexBtnClick}
+              >
+                ALL
+              </button>
+            </div>
             <input
               type="text"
               name="looking-for"
