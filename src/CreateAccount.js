@@ -127,9 +127,10 @@ const CreateAccount = ({ user }) => {
                 ></input>
               </div>
 
-              <p className="create-account-text-label">Gender</p>
+              <p className={`create-account-text-label`}>Gender</p>
               <div className="group-inputs">
                 <button
+                  className={`${gender === "male" ? "active" : ""}`}
                   onClick={(e) => {
                     handleGenderClick(e);
                   }}
@@ -138,6 +139,7 @@ const CreateAccount = ({ user }) => {
                   Man
                 </button>
                 <button
+                  className={`${gender === "female" ? "active" : ""}`}
                   onClick={(e) => {
                     handleGenderClick(e);
                   }}
@@ -146,6 +148,7 @@ const CreateAccount = ({ user }) => {
                   Woman
                 </button>
                 <button
+                  className={`${gender === "other" ? "active" : ""}`}
                   onClick={(e) => {
                     handleGenderClick(e);
                   }}
@@ -157,6 +160,7 @@ const CreateAccount = ({ user }) => {
               <p className="create-account-text-label">Show Me</p>
               <div className="group-inputs">
                 <button
+                  className={`${desiredSex === "male" ? "active" : ""}`}
                   onClick={(e) => {
                     handleShowMeClick(e);
                   }}
@@ -165,6 +169,7 @@ const CreateAccount = ({ user }) => {
                   Men
                 </button>
                 <button
+                  className={`${desiredSex === "female" ? "active" : ""}`}
                   onClick={(e) => {
                     handleShowMeClick(e);
                   }}
@@ -173,6 +178,7 @@ const CreateAccount = ({ user }) => {
                   Women
                 </button>
                 <button
+                  className={`${desiredSex === "all" ? "active" : ""}`}
                   onClick={(e) => {
                     handleShowMeClick(e);
                   }}
