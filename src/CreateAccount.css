@@ -73,7 +73,10 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .group-inputs > button:hover {
-  color: black;
+  background-color: gray;
+}
+.group-inputs > .active {
+  background-color: gray;
 }
 
 .pictures {
