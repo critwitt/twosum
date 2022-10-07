@@ -146,11 +146,7 @@ const Profile = () => {
                 ALL
               </button>
             </div>
-            <input
-              type="text"
-              name="looking-for"
-              defaultValue={userData.desired_sex}
-            ></input>
+
             <button type="submit">Add Changes</button>
           </form>
         </div>

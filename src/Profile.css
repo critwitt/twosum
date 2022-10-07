@@ -72,7 +72,7 @@
   padding-right: 0%;
 }
 .edit-profile-right-content > form > button {
-  margin-left: 5%;
+  margin-left: 0%;
   transition: 100ms all;
 }
 .edit-profile-right-content > form > button:hover {
@@ -81,6 +81,7 @@
 .desired-sexes {
   display: flex;
   margin-left: 5%;
+  margin-right: 70%;
 }
 .desired-sex {
   background-color: rgb(230, 228, 228);
